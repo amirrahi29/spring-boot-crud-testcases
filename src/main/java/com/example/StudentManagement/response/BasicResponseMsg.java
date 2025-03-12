@@ -5,7 +5,16 @@ public class BasicResponseMsg {
     private int status;
     private String message;
     private Object data;
-   
+
+    @Override
+    public String toString() {
+        return "BasicResponseMsg{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     public int getStatus() {
         return status;
     }

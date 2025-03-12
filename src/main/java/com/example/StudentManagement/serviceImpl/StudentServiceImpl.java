@@ -3,6 +3,8 @@ package com.example.StudentManagement.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.StudentManagement.dao.StudentDao;
 import com.example.StudentManagement.model.StudentModel;
@@ -14,6 +16,7 @@ import com.example.StudentManagement.service.StudentService;
 public class StudentServiceImpl implements StudentService {
 
     private StudentDao studentDao;
+    private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
      public StudentServiceImpl(StudentDao studentDao) {
          this.studentDao = studentDao;
@@ -36,13 +39,15 @@ public class StudentServiceImpl implements StudentService {
             // responseMsg.setData(savedStudent);   //for display all data
             responseMsg.setMessage("Student Saved");
             responseMsg.setStatus(200);
+            logger.info(studentRequest.getName()," is added into students list: {}",responseMsg);
+
         } catch (Exception e) {
             e.printStackTrace();
              //setting data on base response model to display users of their response
             responseMsg.setData(null);
-            responseMsg.setMessage("Student Addition Failed!"+e.toString());
+            responseMsg.setMessage("Student Addition Failed!"+e.getMessage());
             responseMsg.setStatus(300);
-
+            logger.info("Student Addition Failed! {}",e.getMessage());
         }
         return responseMsg;
     }
@@ -58,6 +63,7 @@ public class StudentServiceImpl implements StudentService {
                responseMsg.setStatus(200);
                responseMsg.setMessage("Data found");
                responseMsg.setData(studentModelData);
+               logger.info("allStudentsList: {}",responseMsg);
            }else{
                responseMsg.setStatus(300);
                responseMsg.setMessage("Data not found");
@@ -66,8 +72,9 @@ public class StudentServiceImpl implements StudentService {
         } catch (Exception e) {
             e.printStackTrace();
                responseMsg.setStatus(400);
-               responseMsg.setMessage("Data not found "+e.toString());
+               responseMsg.setMessage("Data not found "+e.getMessage());
                responseMsg.setData(null);
+            logger.info("No students available!: {}",e.getMessage());
         }
         return responseMsg;
     }
@@ -81,16 +88,19 @@ public class StudentServiceImpl implements StudentService {
                responseMsg.setStatus(200);
                responseMsg.setMessage("Data found");
                responseMsg.setData(allStudents);
+               logger.info("allStudentsList: {}",responseMsg);
            }else{
                responseMsg.setStatus(300);
                responseMsg.setMessage("Data not found");
                responseMsg.setData(null);
+               logger.info("No students available!");
            }
         } catch (Exception e) {
             e.printStackTrace();
                responseMsg.setStatus(400);
-               responseMsg.setMessage("Data not found "+e.toString());
+               responseMsg.setMessage("Data not found "+e.getMessage());
                responseMsg.setData(null);
+            logger.info("No students available!: {}",e.getMessage());
         }
         return responseMsg;
     }
@@ -113,17 +123,20 @@ public class StudentServiceImpl implements StudentService {
                     // responseMsg.setData(savedStudent);   //for display all data
                     responseMsg.setMessage("Student Updated");
                     responseMsg.setStatus(200);
+                     logger.info("Student updated: {}",responseMsg);
             }else{
                 responseMsg.setStatus(300);
                 responseMsg.setMessage("Student not found");
                 responseMsg.setData(null);
+                logger.info("Student not available!: ");
             }
         } catch (Exception e) {
             e.printStackTrace();
              //setting data on base response model to display users of their response
             responseMsg.setData(null);
-            responseMsg.setMessage("Student Updation Failed!"+e.toString());
+            responseMsg.setMessage("Student Updation Failed!"+e.getMessage());
             responseMsg.setStatus(300);
+            logger.info("Student Updation Failed!: {}",e.getMessage());
 
         }
         return responseMsg;
@@ -140,16 +153,19 @@ public class StudentServiceImpl implements StudentService {
                responseMsg.setStatus(200);
                responseMsg.setMessage("Student deleted");
                responseMsg.setData(studentModelData);
+               logger.info("Student deleted: {}",responseMsg);
            }else{
                responseMsg.setStatus(300);
                responseMsg.setMessage("No student found!");
                responseMsg.setData(null);
+               logger.info("Student not found!: ");
            }
         } catch (Exception e) {
             e.printStackTrace();
                responseMsg.setStatus(400);
-               responseMsg.setMessage("Student not found "+e.toString());
+               responseMsg.setMessage("Student not found "+e.getMessage());
                responseMsg.setData(null);
+            logger.info("Student not found: {}",e.getMessage());
         }
         return responseMsg;
     }

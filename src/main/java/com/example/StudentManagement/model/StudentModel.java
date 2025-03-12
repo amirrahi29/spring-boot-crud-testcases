@@ -37,6 +37,17 @@ public class StudentModel {
         return studentId;
     }
 
+    @Override
+    public String toString() {
+        return "StudentModel{" +
+                "studentId=" + studentId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
